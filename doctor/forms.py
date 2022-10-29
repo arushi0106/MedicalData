@@ -8,3 +8,17 @@ class ResearcherProfileForm(forms.ModelForm):
         model = ResearcherProfile
 
         fields = ['first_name', 'last_name', 'gender', 'phone', 'dob']
+
+class DoctorProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = DoctorProfile
+
+        fields = ['first_name', 'last_name', 'gender', 'phone', 'dob','license_key']
+
+class PatientProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = PatientProfile
+
+        fields = ['first_name', 'last_name', 'gender', 'phone', 'dob','hospital','city','blood_group']

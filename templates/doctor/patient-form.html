@@ -8,7 +8,7 @@
 
     <div class="row">
       <div class="col-6 border-right">
-        <h1 class="subheading">Create your Profile</h1>
+        <h1 class="subheading">Add patient </h1>
       </div>
       <div class="col-6 form">
         <form method="POST">
@@ -28,11 +28,25 @@
 
             {{ form.gender }}
           </div>
-          
+          <h5 class="row">City</h5>
+          <div class="row">
+
+            {{ form.city }}
+          </div class="row">
           <h5 class="row">Phone No.</h5>
           <div class="row">
 
             {{ form.phone}}
+          </div>
+          <h5 class="row">Hostpital</h5>
+          <div class="row">
+
+            {{ form.hospital}}
+          </div>
+          <h5 class="row">Blood Group</h5>
+          <div class="row">
+
+            {{ form.blood_group}}
           </div>
           <h5 class="row">Date of Birth</h5>
           <div class="row">

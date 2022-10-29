@@ -144,7 +144,7 @@ def login_view(request):
                 return redirect('profile_researcher')
 
             if request.user.is_doctor:
-                return redirect('profileform_doctor')
+                return redirect('profile_doctor')
 
 
 
