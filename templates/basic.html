@@ -15,7 +15,7 @@
 <body >
   <!-- Navigation Bar -->
   <nav class="container navbar navbar-expand-lg">
-    <a class="navbar-brand" href="#">Med-Data</a>
+    <a class="navbar-brand" href="{%url 'index'%}">Med-Data</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -26,7 +26,16 @@
           <a class="nav-link" href="{%url 'profile_user'%}">Profile</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="{%url 'add_disease'%}">Add disease</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{%url 'show_disease'%}">Show disease</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="{%url 'add_patient'%}">Add Patient</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{%url 'show_patient'%}">Show Patient</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{%url 'logout'%}">Log out</a>
@@ -34,6 +43,9 @@
         {% elif user.is_researcher %}
         <li class="nav-item">
           <a class="nav-link" href="{%url 'profile_user'%}">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{%url 'show_disease'%}">Show disease</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{%url 'logout'%}">Logout</a>

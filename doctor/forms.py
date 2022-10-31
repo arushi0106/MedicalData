@@ -22,3 +22,10 @@ class PatientProfileForm(forms.ModelForm):
         model = PatientProfile
 
         fields = ['first_name', 'last_name', 'gender', 'phone', 'dob','hospital','city','blood_group']
+
+class DiseaseForm(forms.ModelForm):
+
+    class Meta:
+        model = DiseaseDetails
+
+        fields = '__all__'

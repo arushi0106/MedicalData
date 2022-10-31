@@ -1,5 +1,6 @@
 from django.db import models
 from account.models import *
+import os
 # Create your models here.
 
 class ResearcherProfile(models.Model):
@@ -42,3 +43,31 @@ class PatientProfile(models.Model):
 
     def __str__(self):
         return self.first_name
+
+
+def get_upload_path(instance, filename):
+    return os.path.join(
+      "%s" % instance.name, "%s" % instance.modality, filename)
+
+Possibility = (
+("YES", "YES"),
+("NO", "NO"),
+)
+
+TypeofModality = (
+    ("X-ray","X-ray"),
+    ("CT-scan","CT-scan"),
+    ("MRI","MRI"),
+    ("UltraSound","Ultrasound")
+)
+
+class DiseaseDetails(models.Model):
+    patient = models.ForeignKey(PatientProfile,on_delete=models.CASCADE)
+    name = models.CharField(max_length=30,null=True)
+    modality=models.CharField(max_length=30,choices=TypeofModality,default='X-ray')
+    diagonised = models.CharField(max_length = 20, choices = Possibility, default = 'YES')
+    img=models.ImageField(upload_to=get_upload_path,null=True)
+
+    def __str__(self):
+        return self.name
+

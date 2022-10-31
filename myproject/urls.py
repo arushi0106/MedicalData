@@ -28,5 +28,5 @@ urlpatterns = [
     path('logout', views.logout_view,name='logout'),
     path('request-reset-email',views.RequestResetEmail.as_view(),name='request-reset-email'),
     path('set-new-password/<uidb64>/<token>',views.SetNewPasswordView.as_view(), name='set-new-password'),
-    path('researcher/',include('doctor.urls') ),
+    path('user/',include('doctor.urls') ),
 ]

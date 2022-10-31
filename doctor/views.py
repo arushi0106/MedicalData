@@ -3,7 +3,7 @@ from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.views import generic
 from django.views.generic.base import View
 from django.contrib.auth.decorators import login_required
-from .forms import ResearcherProfileForm, DoctorProfileForm, PatientProfileForm
+from .forms import ResearcherProfileForm, DoctorProfileForm, PatientProfileForm, DiseaseForm
 from .models import *
 
 # Create your views here.
@@ -93,6 +93,7 @@ def add_patient(request):
                 instance.added_by = request.user
                 instance.save()
                 messages.success(request,"Patient has been added successfully")
+                return redirect('show_patient')
             else:
                 messages.error(request,"Please enter valid details")
                 return render(request,'doctor/patient-form.html',{'form':fm})
@@ -100,7 +101,45 @@ def add_patient(request):
             fm = PatientProfileForm()
             return render(request,'doctor/patient-form.html',{'form':fm})
     else:
+        messages.error(request,"You are not authorized to visit that page")
+        return redirect('index')
+
+def show_patient(request):
+    if request.user.is_doctor == True :
+        patients = PatientProfile.objects.filter(added_by=User.object.get(id=request.user.id))
+        context = {
+        'patients': patients
+        }
+        return render(request, 'doctor/patients.html', context)
+    else:
         messages.error(request,"You are not authorized to visit this")
-        return redirect('login')
+        return redirect('index')
 
+def add_disease(request):
+    if request.user.is_doctor == True : 
+        if request.method == 'POST':
+            fm = DiseaseForm(request.POST,request.FILES)
+            if fm.is_valid():
+                instance = fm.save(commit=False)
+                # print(ins)
+                # instance.added_by = request.user
+                instance.save()
+                messages.success(request,"Disease details has been added successfully")
+                return redirect('show_patient')
+            else:
+                messages.error(request,"Please enter valid details")
+                return render(request,'doctor/disease-form.html',{'form':fm})
+        else:
+            fm = DiseaseForm()
+            return render(request,'doctor/disease-form.html',{'form':fm})
+    else:
+        messages.error(request,"You are not authorized to visit that page")
+        return redirect('index')
 
+@login_required
+def show_disease(request):
+    diseases = DiseaseDetails.objects.all()
+    context = {
+        'diseases': diseases
+        }
+    return render(request, 'doctor/diseases.html', context)
