@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'doctor',
     'crispy_forms',
     'researcher',
+    'import_export',
+    'django_filters',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

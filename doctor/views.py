@@ -5,6 +5,8 @@ from django.views.generic.base import View
 from django.contrib.auth.decorators import login_required
 from .forms import ResearcherProfileForm, DoctorProfileForm, PatientProfileForm, DiseaseForm
 from .models import *
+from .filters import DiseaseFilter
+from .resources import diseaseResources
 
 # Create your views here.
 def researcher_profile(request):
@@ -139,7 +141,18 @@ def add_disease(request):
 @login_required
 def show_disease(request):
     diseases = DiseaseDetails.objects.all()
-    context = {
-        'diseases': diseases
+    myfilter = DiseaseFilter(request.GET,queryset=diseases)
+    diseases=myfilter.qs
+    if request.method == 'POST':
+        dataset = diseaseResources().export(diseases).xls
+        response = HttpResponse(dataset,content_type='xls')
+        response['Content-Disposition'] = 'attachment; filename="disease.xls"'
+        return response
+    else:
+        context = {
+        'diseases': diseases,
+        'myfilter': myfilter
         }
-    return render(request, 'doctor/diseases.html', context)
+        return render(request, 'doctor/diseases.html', context)
+
+    

@@ -4,6 +4,14 @@
 {% block body %}
 <div class="container">
 <h1> Disease details</h1>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Download</button>
+</form>
+<form method="get">
+  {{myfilter.form}}
+  <button type="submit">Search</button>
+</form> 
 
     <table class="table">
         <thead>
