@@ -7,6 +7,11 @@ from .forms import ResearcherProfileForm, DoctorProfileForm, PatientProfileForm,
 from .models import *
 from .filters import DiseaseFilter
 from .resources import diseaseResources
+from django.core.files import File
+import os
+import zipfile
+from io import StringIO
+from io import BytesIO
 
 # Create your views here.
 def researcher_profile(request):
@@ -123,6 +128,8 @@ def add_disease(request):
             fm = DiseaseForm(request.POST,request.FILES)
             if fm.is_valid():
                 instance = fm.save(commit=False)
+                print(instance.img)
+                # instance.img=instance.
                 # print(ins)
                 # instance.added_by = request.user
                 instance.save()
@@ -143,11 +150,56 @@ def show_disease(request):
     diseases = DiseaseDetails.objects.all()
     myfilter = DiseaseFilter(request.GET,queryset=diseases)
     diseases=myfilter.qs
-    if request.method == 'POST':
-        dataset = diseaseResources().export(diseases).xls
-        response = HttpResponse(dataset,content_type='xls')
-        response['Content-Disposition'] = 'attachment; filename="disease.xls"'
-        return response
+    print(request)
+    if request.method == 'POST' :
+        # File f
+        data = request.POST
+        print(data)
+        action = data.get("follow")
+        print(action)
+        if action == "follow":
+            print("hello")
+            dataset = diseaseResources().export(diseases).xls
+            response = HttpResponse(dataset,content_type='xls')
+            response['Content-Disposition'] = 'attachment; filename="disease.xls"'
+            return response
+        filenames= []
+        for disease in diseases:
+            filenames.append(disease.img.path)
+        
+        zip_subdir = "Images"
+        zip_filename = "%s.zip" % zip_subdir
+
+        # Open StringIO to grab in-memory ZIP contents
+        s =  BytesIO()
+
+        # The zip compressor
+        zf = zipfile.ZipFile(s, "w")
+
+        for fpath in filenames:
+            # Calculate path for file in zip
+            fdir, fname = os.path.split(fpath)
+            print(fdir)
+            # xpath = os.path.abspath(fpath)
+            # print(xpath)
+            # zip_path = os.path.join(zip_subdir, fname)
+            zip_path = os.path.join(fdir, fname)
+
+
+            # Add file, at correct path
+            # zf.write(fpath, zip_path)
+            zf.write(fpath, zip_path)
+
+
+        # Must close zip for all contents to be written
+        zf.close()
+
+        # Grab ZIP file from in-memory, make response with correct MIME-type
+        resp = HttpResponse(s.getvalue(), content_type = "application/x-zip-compressed")
+        # ..and correct content-disposition
+        resp['Content-Disposition'] = 'attachment; filename=%s' % zip_filename
+
+        return resp
     else:
         context = {
         'diseases': diseases,

@@ -4,13 +4,20 @@
 {% block body %}
 <div class="container">
 <h1> Disease details</h1>
-<form method="post">
+<form method="post" >
   {% csrf_token %}
-  <button type="submit">Download</button>
+  {% comment %} <button type="submit" name="follow" value="hi">Download</button> {% endcomment %}
+  <button class="titlebutton formbtn btn btn-md" name="follow" value="unfollow">
+    Download images
+</button>
+
+<button class="titlebutton formbtn btn btn-md" name="follow" value="follow">
+    Download XL file
+</button>
 </form>
-<form method="get">
+<form method="get" >
   {{myfilter.form}}
-  <button type="submit">Search</button>
+  <button type="submit" class=" formbtn btn btn-sm">Search</button>
 </form> 
 
     <table class="table">

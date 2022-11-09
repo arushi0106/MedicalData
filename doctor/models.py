@@ -1,6 +1,7 @@
 from django.db import models
 from account.models import *
-import os
+import os 
+import uuid
 # Create your models here.
 
 class ResearcherProfile(models.Model):
@@ -46,6 +47,13 @@ class PatientProfile(models.Model):
 
 
 def get_upload_path(instance, filename):
+    ext = filename.split('.')[-1]
+    # get filename
+    if instance.pk:
+        filename = '{}.{}'.format(instance.pk, ext)
+    else:
+        filename = "%s.%s" % (uuid.uuid4(), ext)
+        # filename= instance.name + instance.modality + uuid.uuid4()
     return os.path.join(
       "%s" % instance.name, "%s" % instance.modality, filename)
 
@@ -67,6 +75,7 @@ class DiseaseDetails(models.Model):
     modality=models.CharField(max_length=30,choices=TypeofModality,default='X-ray')
     diagonised = models.CharField(max_length = 20, choices = Possibility, default = 'YES')
     img=models.ImageField(upload_to=get_upload_path,null=True)
+    # img=models.ImageField(null=True)
 
     def __str__(self):
         return self.name
