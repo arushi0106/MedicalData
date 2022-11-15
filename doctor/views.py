@@ -12,6 +12,7 @@ import os
 import zipfile
 from io import StringIO
 from io import BytesIO
+import datetime
 
 # Create your views here.
 def researcher_profile(request):
@@ -113,25 +114,65 @@ def add_patient(request):
 
 def show_patient(request):
     if request.user.is_doctor == True :
-        patients = PatientProfile.objects.filter(added_by=User.object.get(id=request.user.id))
+        patient = PatientProfile.objects.filter(added_by=User.object.get(id=request.user.id))
         context = {
-        'patients': patients
+        'patients': patient
         }
+        # print()
         return render(request, 'doctor/patients.html', context)
     else:
         messages.error(request,"You are not authorized to visit this")
         return redirect('index')
+def show_patient_details(request, id):
+    if request.user.is_doctor == True :
+        patient = PatientProfile.objects.get(id=id)
+        print(patient)
+        diseases = DiseaseDetails.objects.filter(patient=id)
+        myfilter = DiseaseFilter(request.GET,queryset=diseases)
+        diseases=myfilter.qs
+        diseases.order_by('date')
+        context = {
+        'patient': patient,
+        'diseases':diseases,
+        'myfilter':myfilter
+        }
+        # print(disease)
+        return render(request, 'doctor/patient-profile.html', context)
+    else:
+        messages.error(request,"You are not authorized to visit this")
+        return redirect('index')
 
-def add_disease(request):
+# def add_disease(request):
+#     if request.user.is_doctor == True : 
+#         if request.method == 'POST':
+#             fm = DiseaseForm(request.POST,request.FILES)
+#             if fm.is_valid():
+#                 instance = fm.save(commit=False)
+#                 print(instance.img)
+#                 instance.save()
+#                 messages.success(request,"Disease details has been added successfully")
+#                 return redirect('show_patient')
+#             else:
+#                 messages.error(request,"Please enter valid details")
+#                 return render(request,'doctor/disease-form.html',{'form':fm})
+#         else:
+#             fm = DiseaseForm()
+#             return render(request,'doctor/disease-form.html',{'form':fm})
+#     else:
+#         messages.error(request,"You are not authorized to visit that page")
+#         return redirect('index')
+
+def add_disease_patient(request, id):
     if request.user.is_doctor == True : 
         if request.method == 'POST':
             fm = DiseaseForm(request.POST,request.FILES)
+            patient = PatientProfile.objects.get(id=id)
+            # fm.patient=patient
             if fm.is_valid():
                 instance = fm.save(commit=False)
+                instance.patient=patient
+                instance.date=datetime.date.today()
                 print(instance.img)
-                # instance.img=instance.
-                # print(ins)
-                # instance.added_by = request.user
                 instance.save()
                 messages.success(request,"Disease details has been added successfully")
                 return redirect('show_patient')

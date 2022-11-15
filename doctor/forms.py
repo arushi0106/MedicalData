@@ -27,5 +27,4 @@ class DiseaseForm(forms.ModelForm):
 
     class Meta:
         model = DiseaseDetails
-
-        fields = '__all__'
+        fields = ['name', 'modality', 'diagonised', 'img']

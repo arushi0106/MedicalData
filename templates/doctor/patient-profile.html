@@ -1,0 +1,83 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block body %}
+<div class="container">
+  <div class="card mb-3 mt-3">
+    <div class="card-body" style="background-color:#fff">
+      <h1 class="card-title">{{patient.first_name}} {{patient.last_name}}</h1>
+      <table class="table table-borderless">
+        <tbody>
+          <tr>
+            <td>Gender:</td>
+            <td>{{patient.get_gender_display}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Hostpital and City:</td>
+            <td>{{patient.hospital}} and {{patient.city}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Phone No.:</td>
+            <td>{{patient.phone}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Date of Birth: </td>
+            <td>{{patient.dob}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Blood Group </td>
+            <td>{{patient.blood_group}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><Button> <a class="nav-link" href="{%url 'add_disease_patient' patient.id%}">Add report</a></button> </td> 
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br>
+  </div>
+ {%if diseases.count%} 
+ <form method="get" >
+  {{myfilter.form}}
+  <button type="submit" class=" formbtn btn btn-sm">Search</button>
+</form> 
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Diagonised</th>
+          <th scope="col">Modality</th>
+          <th scope="col">Image</th>
+        </tr>
+      </thead>
+      <tbody>
+          {%for disease in diseases %}
+        <tr>
+          <td>{{disease.name}}</td>
+          <td>{{disease.diagonised}}</td>
+          <td>{{disease.modality}}</td>
+          <td>{{disease.img}}</td>
+        </tr>
+        {%endfor%}
+      </tbody>
+    </table>
+    {%endif%}
+
+</div>
+
+{% endblock body %}
