@@ -8,21 +8,21 @@
 
 }
 body {
-  background-color: #7d0633 !important;
+  background-color: #0078AA !important;
   margin-bottom: 20px;
 }
 
 p {
-  color: #7d0633;
+  color: #0078AA;
   margin-bottom: 25px;
 }
 
 h5 {
-  color: #fbdcc4;
+  color: #F6F6F6;
 }
 
 h2 {
-  color: #7d0633;
+  color: #0078AA;
 }
 
 .spacer {
@@ -30,29 +30,29 @@ h2 {
 }
 
 .container {
-  background-color: #7d0633 !important;
-  color: #fbdcc4 !important;
+  background-color: #0078AA !important;
+  color: #F6F6F6 !important;
 }
 .tablehead{
-  background-color: #7d0633 !important;
-  color: #fbdcc4 !important;
+  background-color: #0078AA !important;
+  color: #F6F6F6 !important;
   font-weight: bold;
 }
 .formtwo {
   padding-top: 3%;
 }
 #navigationbar {
-  background-color: #7d0633;
-  color: #fbdcc4;
+  background-color: #0078AA;
+  color: #F6F6F6;
   /* color: #40514e */
 }
 
 .navbar-brand {
-  color: #fbdcc4;
+  color: #F6F6F6;
 }
 
 .nav-link {
-  color: #fbdcc4;
+  color: #F6F6F6;
 }
 
 .nav-link:hover {
@@ -60,15 +60,15 @@ h2 {
 }
 
 #title {
-  background-color: #7d0633;
-  color: #fbdcc4;
+  background-color: #0078AA;
+  color: #F6F6F6;
   padding: 15rem;
   align-items: center;
 }
 
 .heading {
-  background-color: #7d0633;
-  color: #fbdcc4;
+  background-color: #0078AA;
+  color: #F6F6F6;
   font-size: 4rem;
   padding-top: 4rem;
   text-align: center;
@@ -78,24 +78,30 @@ h2 {
   text-align: center;
   font-size: 1.5rem;
 }
-
+.table{
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  background-color: #F6F6F6;
+  color:#0078AA
+}
 .titlebutton {
   align-items: center;
-  background-color: #7d0633;
-  color: #fbdcc4;
+  background-color: #0078AA;
+  color: #F6F6F6;
   opacity: 1;
   margin-top: 5%;
 
 }
 .btn {
-  background-color: #7d0633;
-  color: #fbdcc4;
+  background-color: #0078AA;
+  color: #F6F6F6;
 }
 
 .formbtn {
   margin-top:1%;
-  background-color: #fbdcc4;
-  color: #7d0633;
+  background-color: #F6F6F6;
+  color: #0078AA;
 }
 .titlebutton:hover {
   align-items: center;
@@ -106,17 +112,17 @@ h2 {
   text-align: center;
 }
 .row {
-  background-color: #7d0633;
-  color: #fbdcc4;
+  background-color: #0078AA;
+  color: #F6F6F6;
 }
 #features {
   padding-top: 20px;
-  background-color: #7d0633;
-  color: #fbdcc4;
+  background-color: #0078AA;
+  color: #F6F6F6;
 }
 
 .featurette-heading, .lead {
-  color: #fbdcc4;
+  color: #F6F6F6;
 }
 
 .feature-box {
@@ -125,9 +131,9 @@ h2 {
 }
 
 #about-us {
-  background-color: #fbdcc4;
+  background-color: #F6F6F6;
   text-align: center;
-  color: #7d0633;
+  color: #0078AA;
   padding-top: 10px;
 }
 
@@ -139,22 +145,22 @@ h2 {
   position: fixed;
   width: 100%;
   bottom: 0px;
-  background-color: #fbdcc4;
-  color: #7d0633;
+  background-color: #F6F6F6;
+  color: #0078AA;
   text-align: center;
   height: 20px;
   padding: 3% 15% 3%;
 }
 
 .sidetitle {
-  background-color: #fbdcc4;
-  color: #7d0633;
+  background-color: #F6F6F6;
+  color: #0078AA;
   align-items: center;
 }
 
 .subheading {
 
-  color: #fbdcc4;
+  color: #F6F6F6;
   font-size: 3.5rem;
   padding-top: 50%;
   padding-bottom: 50%;
@@ -162,44 +168,44 @@ h2 {
 }
 
 .button {
-  background-color: #7d0633;
-  color: #fbdcc4;
+  background-color: #0078AA;
+  color: #F6F6F6;
 }
 
 .cd {
   margin-left: 1rem;
   margin-right: 1rem;
   margin-bottom: 1rem;
-  background-color: #7d0633;
-  color: #fbdcc4;
+  background-color: #0078AA;
+  color: #F6F6F6;
   width: 10rem;
 }
 .card{
-  background-color: #fbdcc4 !important;
-  color: #7d0633;
+  background-color: #F6F6F6 !important;
+  color: #0078AA;
 }
 .card-body {
-  background-color: #7d0633;
+  background-color: #F6F6F6;
 }
 .bg-light {
-  background-color: #7d0633;
+  background-color: #0078AA;
 }
 
 .list-group-item {
   margin-bottom: 1rem;
-  background-color: #7d0633;
-  color: #fbdcc4;
+  background-color: #0078AA;
+  color: #F6F6F6;
 }
 
 .alert {
-  background-color: #7d0633;
+  background-color: #0078AA;
   font-size: 1rem;
 }
 
 .dashboardbutton {
   align-items: center;
-  background-color: #7d0633;
-  color: #fbdcc4;
+  background-color: #0078AA;
+  color: #F6F6F6;
   opacity: 1;
   margin-right: 5px;
 }
@@ -214,18 +220,18 @@ h2 {
 }
 
 .center-card {
-  background-color: #7d0633;
-  color: #fbdcc4;
+  background-color: #0078AA;
+  color: #F6F6F6;
   /* text-align: center; */
 }
 
 .templatebutton {
-  background-color: #fbdcc4;
-  color: #7d0633;
+  background-color: #F6F6F6;
+  color: #0078AA;
 }
 
 .blockquote{
-  background-color: #fbdcc4;
+  background-color: #F6F6F6;
 }
 
 .form {

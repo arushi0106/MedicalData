@@ -118,11 +118,11 @@ def show_patient(request):
         context = {
         'patients': patient
         }
-        # print()
         return render(request, 'doctor/patients.html', context)
     else:
         messages.error(request,"You are not authorized to visit this")
         return redirect('index')
+
 def show_patient_details(request, id):
     if request.user.is_doctor == True :
         patient = PatientProfile.objects.get(id=id)
@@ -142,26 +142,7 @@ def show_patient_details(request, id):
         messages.error(request,"You are not authorized to visit this")
         return redirect('index')
 
-# def add_disease(request):
-#     if request.user.is_doctor == True : 
-#         if request.method == 'POST':
-#             fm = DiseaseForm(request.POST,request.FILES)
-#             if fm.is_valid():
-#                 instance = fm.save(commit=False)
-#                 print(instance.img)
-#                 instance.save()
-#                 messages.success(request,"Disease details has been added successfully")
-#                 return redirect('show_patient')
-#             else:
-#                 messages.error(request,"Please enter valid details")
-#                 return render(request,'doctor/disease-form.html',{'form':fm})
-#         else:
-#             fm = DiseaseForm()
-#             return render(request,'doctor/disease-form.html',{'form':fm})
-#     else:
-#         messages.error(request,"You are not authorized to visit that page")
-#         return redirect('index')
-
+@login_required
 def add_disease_patient(request, id):
     if request.user.is_doctor == True : 
         if request.method == 'POST':
