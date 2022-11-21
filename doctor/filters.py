@@ -9,10 +9,11 @@ class DiseaseFilter(django_filters.FilterSet):
     ('descending','Descending')
     )
     name = CharFilter(label ='diesease name',field_name='name', lookup_expr='icontains')
+    organ = CharFilter(label ='Organ',field_name='organ', lookup_expr='icontains')
     # ordering = ChoiceFilter(label='ordering',choices='CHOICES',method='filter_by_order')
     class Meta:
         model = DiseaseDetails
-        fields = ['name','modality','diagonised']
+        fields = ['name','modality','diagonised','organ']
 
     def filter_by_order(self , queryset, name, value):
         expression='date' if value == 'ascending' else '-date'

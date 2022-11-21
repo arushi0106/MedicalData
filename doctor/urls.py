@@ -11,6 +11,5 @@ urlpatterns = [
     path('user_profile', views.profile, name="profile_user"),
     path('show_disease', views.show_disease, name="show_disease"),
     path('show_patient_details/<str:id>', views.show_patient_details, name="show_patient_details"),
-    # path('unit_student/<int:bid>',views.units,name="unit_student"),
-    # path('giveRating/<int:bid>',views.giveRating,name="giveRating"),
+
 ]

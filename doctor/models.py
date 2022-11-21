@@ -12,6 +12,8 @@ class ResearcherProfile(models.Model):
     last_name = models.CharField(max_length=255)
     phone = models.IntegerField()
     dob = models.DateField()
+    organization = models.CharField(max_length=255,null=True)
+    country = models.CharField(max_length=255,null=True)
 
     def __str__(self):
         return self.first_name
@@ -26,6 +28,7 @@ class DoctorProfile(models.Model):
     last_name = models.CharField(max_length=255)
     phone = models.IntegerField()
     dob = models.DateField()
+    specialization = models.CharField(max_length=255,null=True)
 
     def __str__(self):
         return self.first_name
@@ -66,16 +69,35 @@ TypeofModality = (
     ("X-ray","X-ray"),
     ("CT-scan","CT-scan"),
     ("MRI","MRI"),
-    ("UltraSound","Ultrasound")
+    ("UltraSound","Ultrasound"),
+    ("Angiography","Angiography"),
+    ("Electrocardiogram","ECG"),
+    ("PET","PET"),
+    ("OCT","OCT")
 )
+
+MEDIA_CHOICES = [
+    ('Audio', (
+            ('vinyl', 'Vinyl'),
+            ('cd', 'CD'),
+        )
+    ),
+    ('Video', (
+            ('vhs', 'VHS Tape'),
+            ('dvd', 'DVD'),
+        )
+    ),
+    ('unknown', 'Unknown'),
+]
 
 class DiseaseDetails(models.Model):
     patient = models.ForeignKey(PatientProfile,on_delete=models.CASCADE)
     name = models.CharField(max_length=30,null=True)
+    organ = models.CharField(max_length=100,null=True)
     modality=models.CharField(max_length=30,choices=TypeofModality,default='X-ray')
     diagonised = models.CharField(max_length = 20, choices = Possibility, default = 'YES')
     img=models.ImageField(upload_to=get_upload_path,null=True)
-    date = models.DateTimeField(auto_now_add=True,null=True)
+    date = models.DateTimeField(null=True)
     # img=models.ImageField(null=True)
 
     def __str__(self):

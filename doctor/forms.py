@@ -7,14 +7,14 @@ class ResearcherProfileForm(forms.ModelForm):
     class Meta:
         model = ResearcherProfile
 
-        fields = ['first_name', 'last_name', 'gender', 'phone', 'dob']
+        fields = ['first_name', 'last_name', 'gender', 'phone', 'dob','country','organization']
 
 class DoctorProfileForm(forms.ModelForm):
 
     class Meta:
         model = DoctorProfile
 
-        fields = ['first_name', 'last_name', 'gender', 'phone', 'dob','license_key']
+        fields = ['first_name', 'last_name', 'gender', 'phone', 'dob','license_key','specialization']
 
 class PatientProfileForm(forms.ModelForm):
 
@@ -27,4 +27,4 @@ class DiseaseForm(forms.ModelForm):
 
     class Meta:
         model = DiseaseDetails
-        fields = ['name', 'modality', 'diagonised', 'img']
+        fields = ['name', 'modality', 'diagonised', 'img','organ']
