@@ -1,6 +1,7 @@
 {% extends 'basic.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
+{% load templatehelper %}
 {% block body %}
 <div class="container">
 <h1> Disease details</h1>
@@ -44,7 +45,25 @@
       </table>
  
 
-
+      <nav aria-label="...">
+        <ul class="pagination">
+          {%if diseases.has_previous %}
+          <li class="page-item ">
+            <a class="page-link" href="{% relative_url diseases.previous_page_number 'page' request.GET.urlencode %}" >Previous</a>
+          </li>
+          {% endif %}
+          {% comment %} <li class="page-item"><a class="page-link" href="?page=1">1</a></li> {% endcomment %}
+          <li class="page-item ">
+            <a class="page-link" href="{% relative_url diseases.number 'page' request.GET.urlencode %}">{{diseases.number}}</a>
+          </li>
+          {% comment %} <li class="page-item"><a class="page-link" href="{% relative_url 3 'page' request.GET.urlencode %}">3</a></li> {% endcomment %}
+          {%if diseases.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="{% relative_url diseases.next_page_number 'page' request.GET.urlencode %}">Next</a>
+          </li>
+          {%endif%}
+        </ul>
+      </nav>
 </div>
 
 {% endblock body %}

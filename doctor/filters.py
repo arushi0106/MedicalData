@@ -8,7 +8,7 @@ class DiseaseFilter(django_filters.FilterSet):
         ('ascending','Ascending'),
     ('descending','Descending')
     )
-    name = CharFilter(label ='diesease name',field_name='name', lookup_expr='icontains')
+    name = CharFilter(label ='Diesease Name',field_name='name', lookup_expr='icontains')
     organ = CharFilter(label ='Organ',field_name='organ', lookup_expr='icontains')
     # ordering = ChoiceFilter(label='ordering',choices='CHOICES',method='filter_by_order')
     class Meta:

@@ -13,6 +13,7 @@ import zipfile
 from io import StringIO
 from io import BytesIO
 import datetime
+from django.core.paginator import Paginator
 
 # Create your views here.
 def researcher_profile(request):
@@ -130,13 +131,15 @@ def show_patient_details(request, id):
         diseases = DiseaseDetails.objects.filter(patient=id)
         myfilter = DiseaseFilter(request.GET,queryset=diseases)
         diseases=myfilter.qs
-        diseases.order_by('date')
+        # diseases.order_by('date')
+        paginator = Paginator(diseases,5)
+        page_number=request.GET.get('page')
+        DiseaseFinal=paginator.get_page(page_number)
         context = {
         'patient': patient,
-        'diseases':diseases,
+        'diseases':DiseaseFinal,
         'myfilter':myfilter
         }
-        # print(disease)
         return render(request, 'doctor/patient-profile.html', context)
     else:
         messages.error(request,"You are not authorized to visit this")
@@ -152,6 +155,7 @@ def add_disease_patient(request, id):
             if fm.is_valid():
                 instance = fm.save(commit=False)
                 instance.patient=patient
+                instance.name=instance.name.capitalize()
                 instance.date=datetime.date.today()
                 print(instance.img)
                 instance.save()
@@ -223,8 +227,11 @@ def show_disease(request):
 
         return resp
     else:
+        paginator = Paginator(diseases,5)
+        page_number=request.GET.get('page')
+        DiseaseFinal=paginator.get_page(page_number)
         context = {
-        'diseases': diseases,
+        'diseases': DiseaseFinal,
         'myfilter': myfilter
         }
         return render(request, 'doctor/diseases.html', context)

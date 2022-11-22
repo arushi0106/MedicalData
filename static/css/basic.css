@@ -87,15 +87,15 @@ h2 {
 }
 .titlebutton {
   align-items: center;
-  background-color: #0078AA;
-  color: #F6F6F6;
+  background-color: #F6F6F6;
+  color: #0078AA;
   opacity: 1;
   margin-top: 5%;
 
 }
 .btn {
-  background-color: #0078AA;
-  color: #F6F6F6;
+  background-color: #F6F6F6;
+  color: #0078AA;
 }
 
 .formbtn {

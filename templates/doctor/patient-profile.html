@@ -1,57 +1,14 @@
 {% extends 'basic.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
+{% load templatehelper %}
 {% block body %}
 <div class="container">
-  <div class="card mb-3 mt-3">
-    <div class="card-body" style="background-color:#fff">
-      <h1 class="card-title">{{patient.first_name}} {{patient.last_name}}</h1>
-      <table class="table table-borderless">
-        <tbody>
-          <tr>
-            <td>Gender:</td>
-            <td>{{patient.get_gender_display}}</td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Hostpital and City:</td>
-            <td>{{patient.hospital}} and {{patient.city}}</td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Phone No.:</td>
-            <td>{{patient.phone}}</td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Date of Birth: </td>
-            <td>{{patient.dob}}</td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Blood Group </td>
-            <td>{{patient.blood_group}}</td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td><Button> <a class="nav-link" href="{%url 'add_disease_patient' patient.id%}">Add report</a></button> </td> 
-          </tr>
-        </tbody>
-      </table>
+  <Button> <a class="btn" href="{%url 'add_disease_patient' patient.id%}">Add report</a></button>
+    <div class="container">
+    <h1> These are the records of {{patient.first_name}} {{patient.last_name}}</h1>
     </div>
-    <br>
-  </div>
- {%if diseases.count%} 
+ {% comment %} {%if diseases.count%}  {% endcomment %}
  <form method="get" >
   {{myfilter.form}}
   <button type="submit" class=" formbtn btn btn-sm">Search</button>
@@ -62,6 +19,7 @@
           <th scope="col">Name</th>
           <th scope="col">Diagonised</th>
           <th scope="col">Modality</th>
+          <th scope="col">Organ</th>
           <th scope="col">Image</th>
         </tr>
       </thead>
@@ -71,13 +29,32 @@
           <td>{{disease.name}}</td>
           <td>{{disease.diagonised}}</td>
           <td>{{disease.modality}}</td>
+          <td>{{disease.organ}}</td>
           <td>{{disease.img}}</td>
         </tr>
         {%endfor%}
       </tbody>
     </table>
-    {%endif%}
-
+    {% comment %} {%endif%} {% endcomment %}
+      <nav aria-label="...">
+        <ul class="pagination">
+          {%if diseases.has_previous %}
+          <li class="page-item ">
+            <a class="page-link" href="{% relative_url diseases.previous_page_number 'page' request.GET.urlencode %}" >Previous</a>
+          </li>
+          {% endif %}
+          {% comment %} <li class="page-item"><a class="page-link" href="?page=1">1</a></li> {% endcomment %}
+          <li class="page-item ">
+            <a class="page-link" href="{% relative_url diseases.number 'page' request.GET.urlencode %}">{{diseases.number}}</a>
+          </li>
+          {% comment %} <li class="page-item"><a class="page-link" href="{% relative_url 3 'page' request.GET.urlencode %}">3</a></li> {% endcomment %}
+          {%if diseases.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="{% relative_url diseases.next_page_number 'page' request.GET.urlencode %}">Next</a>
+          </li>
+          {%endif%}
+        </ul>
+      </nav>
 </div>
 
 {% endblock body %}
