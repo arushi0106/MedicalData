@@ -4,6 +4,17 @@ import os
 import uuid
 # Create your models here.
 
+TypeofBlooadGroup = (
+    ("A+","A+"),
+    ("A-","A-"),
+    ("B+","B+"),
+    ("B-","B-"),
+    ("AB+","AB+"),
+    ("AB-","AB-"),
+    ("O+","O+"),
+    ("O-","O-"),
+)
+
 class ResearcherProfile(models.Model):
     GENDER = (('M','MALE'),('F','FEMALE'))
     researcher = models.OneToOneField(User,on_delete=models.CASCADE)
@@ -38,7 +49,7 @@ class PatientProfile(models.Model):
     added_by = models.ForeignKey(User,on_delete=models.CASCADE)
     gender = models.CharField(default='M',choices=GENDER, max_length=1)
     first_name = models.CharField(max_length=255)
-    blood_group = models.CharField(max_length=255)
+    blood_group = models.CharField(max_length=3,choices=TypeofBlooadGroup,default='A+')
     hospital = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
@@ -76,6 +87,8 @@ TypeofModality = (
     ("OCT","OCT")
 )
 
+
+
 MEDIA_CHOICES = [
     ('Audio', (
             ('vinyl', 'Vinyl'),
@@ -98,7 +111,6 @@ class DiseaseDetails(models.Model):
     diagonised = models.CharField(max_length = 20, choices = Possibility, default = 'YES')
     img=models.ImageField(upload_to=get_upload_path,null=True)
     date = models.DateTimeField(null=True)
-    # img=models.ImageField(null=True)
 
     def __str__(self):
         return self.name

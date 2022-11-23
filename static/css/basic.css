@@ -98,6 +98,10 @@ h2 {
   color: #0078AA;
 }
 
+.myinput{
+  text-transform: capitalize
+}
+
 .formbtn {
   margin-top:1%;
   background-color: #F6F6F6;
@@ -198,7 +202,7 @@ h2 {
 }
 
 .alert {
-  background-color: #0078AA;
+  background-color: #ffffff;
   font-size: 1rem;
 }
 

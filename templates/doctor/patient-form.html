@@ -13,12 +13,11 @@
       <div class="col-6 form">
         <form method="POST">
           {% csrf_token %}
-          <h5 class="row">First Name</h5>
-          <div class="row">
-            <br>
+          <h5 class="row ">First Name</h5>
+          <div class="row myinput">
             {{ form.first_name }}
           </div>
-          <h5 class="row">Last Name</h5>
+          <h5 class="row myinput">Last Name</h5>
           <div class="row">
 
             {{ form.last_name}}

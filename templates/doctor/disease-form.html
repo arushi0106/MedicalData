@@ -8,17 +8,17 @@
 
     <div class="row">
       <div class="col-6 border-right">
-        <h1 class="subheading">Add Disease </h1>
+        <h1 class="subheading">Add a report for {{patient.first_name}} {{patient.last_name}} </h1>
       </div>
       <div class="col-6 form">
         <form method="POST" enctype="multipart/form-data">
           {% csrf_token %}
-          <h5 class="row"> Name</h5>
+          <h5 class="row myinput"> Name</h5>
           <div class="row">
             <br>
             {{ form.name }}
           </div>
-          <h5 class="row">Modality</h5>
+          <h5 class="row ">Modality</h5>
           <div class="row">
 
             {{ form.modality}}
@@ -28,7 +28,7 @@
 
             {{ form.diagonised }}
           </div>
-          <h5 class="row">Organ</h5>
+          <h5 class="row myinput">Organ</h5>
           <div class="row">
 
             {{ form.organ }}
