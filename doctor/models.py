@@ -21,10 +21,13 @@ class ResearcherProfile(models.Model):
     gender = models.CharField(default='M',choices=GENDER, max_length=1)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    phone = models.IntegerField()
+    phone = models.CharField(max_length=10,null=True)
     dob = models.DateField()
+    otp = models.CharField(max_length=5,null=True,blank=True)
+    verified_phone = models.BooleanField(default=False,null=True)
     organization = models.CharField(max_length=255,null=True)
     country = models.CharField(max_length=255,null=True)
+    country_code = models.CharField(max_length=2, default="91")
 
     def __str__(self):
         return self.first_name
@@ -33,13 +36,16 @@ class DoctorProfile(models.Model):
     GENDER = (('M','MALE'),('F','FEMALE'))
     doctor = models.OneToOneField(User,on_delete=models.CASCADE)
     gender = models.CharField(default='M',choices=GENDER, max_length=1)
+    otp = models.CharField(max_length=5,null=True,blank=True)
+    verified_phone = models.BooleanField(default=False,null=True)
     first_name = models.CharField(max_length=255)
     license_key = models.CharField(max_length=255)
     verified_admin = models.BooleanField(default=False,null=True)
     last_name = models.CharField(max_length=255)
-    phone = models.IntegerField()
+    phone = models.CharField(max_length=10,null=True)
     dob = models.DateField()
     specialization = models.CharField(max_length=255,null=True)
+    country_code = models.CharField(max_length=2, default="91")
 
     def __str__(self):
         return self.first_name

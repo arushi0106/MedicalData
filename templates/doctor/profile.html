@@ -48,6 +48,12 @@
     </div>
 
   </div>
+   {% if doctor.verified_phone %}
+  <h2 class="card-title card"> Your phone is already verified</h2>
+  {% else %} 
+  <button class="btn-primary"><a class="nav-link" href="{%url 'otp_verify'%}">Otp verify</a></button>
+  {% endif%}
+  
 </div>
 
 {% endblock body %}

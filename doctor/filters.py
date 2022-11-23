@@ -19,7 +19,8 @@ class DiseaseFilter(django_filters.FilterSet):
         expression='date' if value == 'ascending' else '-date'
         return queryset.order_by(expression)
 
-# class PatientFilter(django_filters.FilterSet):
-#     class Meta:
-#         model=PatientProfile
-#         fields = ['name']
+class PatientFilter(django_filters.FilterSet):
+    first_name = CharFilter(label ='Name',field_name='first_name', lookup_expr='icontains')
+    class Meta:
+        model=PatientProfile
+        fields = ['first_name']

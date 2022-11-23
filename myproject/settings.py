@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 # Application definition
 AUTH_USER_MODEL = 'account.User'
 
+
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'account',
@@ -39,6 +41,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'researcher',
     'import_export',
+    'rest_framework',
     'django_filters',
     'django.contrib.auth',
     'django.contrib.contenttypes',

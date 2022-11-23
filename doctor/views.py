@@ -1,3 +1,5 @@
+import math
+import random
 from django.contrib import messages
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.views import generic
@@ -5,15 +7,17 @@ from django.views.generic.base import View
 from django.contrib.auth.decorators import login_required
 from .forms import ResearcherProfileForm, DoctorProfileForm, PatientProfileForm, DiseaseForm
 from .models import *
-from .filters import DiseaseFilter
+from .filters import DiseaseFilter, PatientFilter
 from .resources import diseaseResources
 from django.core.files import File
 import os
 import zipfile
+import requests
 from io import StringIO
 from io import BytesIO
 import datetime
 from django.core.paginator import Paginator
+
 
 # Create your views here.
 @login_required
@@ -151,8 +155,14 @@ def show_patient(request):
         if check_profile_created(request=request)==True:
             if check_admin_verified(request=request)==True:
                 patient = PatientProfile.objects.filter(added_by=User.object.get(id=request.user.id))
+                myfilter = PatientFilter(request.GET,queryset=patient)
+                patient = myfilter.qs
+                paginator = Paginator(patient,6)
+                page_number=request.GET.get('page')
+                PatientFinal=paginator.get_page(page_number)
                 context = {
-                'patients': patient
+                'patients': PatientFinal,
+                'myfilter':myfilter
                 }
                 return render(request, 'doctor/patients.html', context)
             else:
@@ -169,11 +179,9 @@ def show_patient(request):
 def show_patient_details(request, id):
     if request.user.is_doctor == True :
         patient = PatientProfile.objects.get(id=id)
-        print(patient)
         diseases = DiseaseDetails.objects.filter(patient=id)
         myfilter = DiseaseFilter(request.GET,queryset=diseases)
-        diseases=myfilter.qs
-        # diseases.order_by('date')
+        diseases = myfilter.qs
         paginator = Paginator(diseases,5)
         page_number=request.GET.get('page')
         DiseaseFinal=paginator.get_page(page_number)
@@ -284,5 +292,60 @@ def show_disease(request):
         messages.error(request,"Please first create your profile ")
         return redirect("profile_user")
 
+def generateOTP() :
+     digits = "0123456789"
+     OTP = ""
+     for i in range(4) :
+         OTP += digits[math.floor(random.random() * 10)]
+     return OTP
 
-    
+
+
+def otp_verify_send(request):
+    if request.user.is_doctor:
+        doctor = DoctorProfile.objects.get(doctor=User.object.get(id=request.user.id))
+        otp=generateOTP()
+        doctor.otp = otp
+        api_key=""
+        url = f'https://2factor.in/API/V1/{api_key}/SMS/+91{researcher.phone}/{otp}/'
+        response = requests.get(url)
+        doctor.save()
+        messages.info(request,"OTP has been send to your registered number")
+        return render(request,'account/otpverify.html')
+    else:
+        researcher = ResearcherProfile.objects.get(researcher=User.object.get(id=request.user.id))
+        otp=generateOTP()
+        researcher.otp=otp
+        researcher.save()
+        api_key=""
+        url = f'https://2factor.in/API/V1/{api_key}/SMS/+91{researcher.phone}/{otp}/'
+        messages.info(request,"OTP has been send to your registered number")
+        return render(request,'account/otpverify.html')
+        
+def verify_otp(request):
+    if request.method=='POST':
+        otp = request.POST['otp']
+        if request.user.is_doctor==True:
+            doctor = DoctorProfile.objects.get(doctor=User.object.get(id=request.user.id))
+            if(doctor.otp==otp):
+                messages.success(request,"Your phone number is verified")
+                doctor.verified_phone=True
+                doctor.save()
+                return redirect('profile_user')
+            else:
+                messages.error(request,"Incorrect otp")
+                return render(request,'account/otpverify.html')
+        else:
+            researcher = ResearcherProfile.objects.get(researcher=User.object.get(id=request.user.id))
+            if(researcher.otp==otp):
+                messages.success(request,"Your phone number is verified")
+                researcher.verified_phone=True
+                researcher.save()
+                return redirect('profile_user')
+            else:
+                messages.error(request,"Incorrect otp")
+                return render(request,'account/otpverify.html')
+
+    else:
+        return redirect('otp_verify')
+

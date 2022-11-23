@@ -55,6 +55,12 @@
     </div>
 
   </div>
+  {% if researcher.verified_phone %}
+  <h2> Your phone is already verified</h2>
+  {% else %}
+  <button class="btn-primary"><a class="nav-link" href="{%url 'otp_verify'%}">OTP Verify</a></button>
+  {% endif%}
+  
 </div>
 
 {% endblock body %}
