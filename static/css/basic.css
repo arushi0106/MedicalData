@@ -93,10 +93,10 @@ h2 {
   margin-top: 5%;
 
 }
-.btn {
+/* .btn {
   background-color: #F6F6F6;
   color: #0078AA;
-}
+} */
 
 .myinput{
   text-transform: capitalize
@@ -251,4 +251,10 @@ h2 {
 
 .dropdown {
   display: inline-block;
+}
+
+#img01{
+  padding: 50px;
+  width: auto;
+  height: 90vh;
 }

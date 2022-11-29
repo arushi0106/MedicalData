@@ -8,20 +8,20 @@
 <form method="post" >
   {% csrf_token %}
   {% comment %} <button type="submit" name="follow" value="hi">Download</button> {% endcomment %}
-  <button class="titlebutton formbtn btn btn-md" name="follow" value="unfollow">
+  <button class=" btn  btn-primary" name="follow" value="unfollow">
     Download images
 </button>
 
-<button class="titlebutton formbtn btn btn-md" name="follow" value="follow">
+<button class="btn btn-primary" name="follow" value="follow">
     Download XL file
 </button>
 </form>
 <br>
 <form method="get" >
   {{myfilter.form}}
-  <button type="submit" class="  btn btn-sm">Search</button>
+  <button type="submit" class="  btn btn-info">Search</button>
 </form> 
-
+<br>
     <table class="table">
         <thead>
           <tr>
@@ -30,6 +30,7 @@
             <th scope="col">Modality</th>
             <th scope="col">Organ</th>
             <th scope="col">Image</th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
@@ -39,7 +40,8 @@
             <td>{{disease.diagonised}}</td>
             <td>{{disease.modality}}</td>
             <td>{{disease.organ}}</td>
-            <td>{{disease.img}}</td>
+            <td >{{disease.img}}</td>
+            <td> <button type="button" class ="btn btn-primary"onclick="myfun('{{disease.img}}')">View img</button></td>
           </tr>
           {%endfor%}
         </tbody>
@@ -67,4 +69,37 @@
       </nav>
 </div>
 
+<div id="myModal" class="modal container">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
+
 {% endblock body %}
+
+{% block script %}
+<script>
+
+var modal = document.getElementById("myModal");
+
+var modalImg = document.getElementById("img01");
+var captionText = document.getElementById("caption");
+function myfun(parameter)
+{
+  modal.style.display = "block";
+  console.log(parameter)
+  modalImg.src = "http://127.0.0.1:8000/media/"+parameter;
+  
+  
+}
+
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() { 
+  modal.style.display = "none";
+}
+</script>
+{% endblock script %}

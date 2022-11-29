@@ -200,7 +200,7 @@ def add_disease_patient(request, id):
     if request.user.is_doctor == True : 
         patient = PatientProfile.objects.get(id=id)
         if request.method == 'POST':
-            messages.alert(request,"Doctors are advised to take consent from patient before uploading data")
+            messages.info(request,"Doctors are advised to take consent from patient before uploading data")
             fm = DiseaseForm(request.POST,request.FILES)
             # fm.patient=patient
             if fm.is_valid():
@@ -306,8 +306,8 @@ def otp_verify_send(request):
         doctor = DoctorProfile.objects.get(doctor=User.object.get(id=request.user.id))
         otp=generateOTP()
         doctor.otp = otp
-        api_key=""
-        url = f'https://2factor.in/API/V1/{api_key}/SMS/+91{researcher.phone}/{otp}/'
+        
+        url = f'https://2factor.in/API/V1/{api_key}/SMS/+91{doctor.phone}/{otp}/'
         response = requests.get(url)
         doctor.save()
         messages.info(request,"OTP has been send to your registered number")
@@ -317,7 +317,7 @@ def otp_verify_send(request):
         otp=generateOTP()
         researcher.otp=otp
         researcher.save()
-        api_key=""
+        
         url = f'https://2factor.in/API/V1/{api_key}/SMS/+91{researcher.phone}/{otp}/'
         messages.info(request,"OTP has been send to your registered number")
         return render(request,'account/otpverify.html')

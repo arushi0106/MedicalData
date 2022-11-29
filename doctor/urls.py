@@ -1,5 +1,8 @@
 from django.urls import path,include
 from doctor import views
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
 
@@ -15,3 +18,4 @@ urlpatterns = [
     path('show_patient_details/<str:id>', views.show_patient_details, name="show_patient_details"),
 
 ]
+
